@@ -13,7 +13,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
     className?: string;
 };
 
-export default function CustomButton({
+export default function CustomButtonRightIcon({
     label,
     icon,
     width,

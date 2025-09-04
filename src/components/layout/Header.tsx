@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 
-import CustomButton from "@/components/ui/CustomButton";
 import CustomIconButton from "@/components/ui/CustomIconButton";
 import CustomNotificationButton from "@/components/ui/CustomNotificationButton";
 import SearchInput from "@/components/ui/CustomSearchInput";
@@ -13,6 +12,7 @@ import PlusIcon from "@/images/icons/Plus.svg";
 import SettingIcon from "@/images/icons/Settings.svg";
 import BellIcon from "@/images/icons/Bell.svg";
 import Logo from "@/images/logos/Logo_Text.svg";
+import CustomButtonRightIcon from "@/components/ui/CustomButtonRightIcon";
 
 export default function Header() {
     return (
@@ -31,7 +31,7 @@ export default function Header() {
 
                 <div className="flex items-center gap-12">
                     <div className="hidden md:flex items-center gap-6">
-                        <CustomButton
+                        <CustomButtonRightIcon
                             label="Create new board"
                             icon={PlusIcon}
                             width={170}
