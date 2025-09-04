@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Primary */
+  --color-primary-500: #3772ff;
+  --color-primary-100: #cdddfd;
+  /* Orange */
+  --color-orange-500: #ff5c00;
+  /* Green */
+  --color-green-500: #aee753;
+  --color-green-600: #4b6029;
+  /* Red */
+  --color-red-500: #f90430;
+  /* Neutral */
+  --color-neutral-950: #141416;
+  --color-neutral-900: #23262f;
+  --color-neutral-800: #353945;
+  --color-neutral-700: #777e90;
+  --color-neutral-600: #b1b5c3;
+  --color-neutral-300: #e6e8ec;
+  --color-neutral-200: #f4f5f6;
+  --color-neutral-100: #fcfcfd;
+
+  /* Fonts */
+  --font-poppins: var(--font-poppins);
+  --font-roboto: var(--font-roboto);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff; 
+    --foreground: #0a0a0a; 
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins); 
+}
+
+@utility bg-primary-500 {
+  background-color: var(--color-primary-500);
+}
+
+@utility font-poppins {
+  font-family: var(--font-poppins);
+}
+
+@utility font-roboto {
+  font-family: var(--font-roboto);
+}
+
+.svg-filter-white {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+.svg-filter-neutral-950 {
+    filter: invert(100%) sepia(1%) saturate(5430%) hue-rotate(189deg) brightness(97%) contrast(92%);
+}
+
+.svg-filter-neutral-900 {
+    filter: invert(100%) sepia(12%) saturate(3015%) hue-rotate(193deg) brightness(90%) contrast(90%);
+}
+
+.svg-filter-neutral-800 {
+    filter: invert(100%) sepia(19%) saturate(1210%) hue-rotate(191deg) brightness(88%) contrast(95%);
+}
+
+.svg-filter-neutral-700 {
+    filter: invert(100%) sepia(18%) saturate(336%) hue-rotate(190deg) brightness(98%) contrast(93%);
+}
+
+.svg-filter-neutral-600 {
+    filter: invert(100%) sepia(0%) saturate(240%) hue-rotate(194deg) brightness(121%) contrast(94%);
+}
+
+.svg-filter-neutral-300 {
+    filter: invert(100%) sepia(2%) saturate(171%) hue-rotate(186deg) brightness(108%) contrast(96%);
+}
+
+.svg-filter-neutral-200 {
+    filter: invert(98%) sepia(2%) saturate(0%) hue-rotate(193deg) brightness(108%) contrast(97%);
+}
+
+.svg-filter-neutral-100 {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(24deg) brightness(109%) contrast(97%);
 }
