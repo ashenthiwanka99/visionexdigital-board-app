@@ -11,15 +11,17 @@
   --color-green-600: #4b6029;
   /* Red */
   --color-red-500: #f90430;
+  /* White */
+  --color-White-500: #ffffff;
   /* Neutral */
-  --color-neutral-950: #141416;
-  --color-neutral-900: #23262f;
-  --color-neutral-800: #353945;
-  --color-neutral-700: #777e90;
-  --color-neutral-600: #b1b5c3;
-  --color-neutral-300: #e6e8ec;
-  --color-neutral-200: #f4f5f6;
-  --color-neutral-100: #fcfcfd;
+  --color-neutral-1: #141416;
+  --color-neutral-2: #23262f;
+  --color-neutral-3: #353945;
+  --color-neutral-4: #777e90;
+  --color-neutral-5: #b1b5c3;
+  --color-neutral-6: #e6e8ec;
+  --color-neutral-7: #f4f5f6;
+  --color-neutral-8: #fcfcfd;
 
   /* Fonts */
   --font-poppins: var(--font-poppins);
@@ -28,15 +30,15 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --background: #ffffff; 
-    --foreground: #0a0a0a; 
+    --background: #ffffff;
+    --foreground: #0a0a0a;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-poppins); 
+  font-family: var(--font-poppins);
 }
 
 @utility bg-primary-500 {
@@ -52,36 +54,47 @@ body {
 }
 
 .svg-filter-white {
-    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-}
-.svg-filter-neutral-950 {
-    filter: invert(100%) sepia(1%) saturate(5430%) hue-rotate(189deg) brightness(97%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%)
+    hue-rotate(0deg) brightness(100%) contrast(100%);
 }
 
-.svg-filter-neutral-900 {
-    filter: invert(100%) sepia(12%) saturate(3015%) hue-rotate(193deg) brightness(90%) contrast(90%);
+/* Neutral Colors */
+.svg-filter-neutral-1 {
+  filter: brightness(0) saturate(100%) invert(4%) sepia(3%) saturate(2161%)
+    hue-rotate(201deg) brightness(93%) contrast(90%);
 }
 
-.svg-filter-neutral-800 {
-    filter: invert(100%) sepia(19%) saturate(1210%) hue-rotate(191deg) brightness(88%) contrast(95%);
+.svg-filter-neutral-2 {
+  filter: brightness(0) saturate(100%) invert(12%) sepia(10%) saturate(1202%)
+    hue-rotate(187deg) brightness(89%) contrast(91%);
 }
 
-.svg-filter-neutral-700 {
-    filter: invert(100%) sepia(18%) saturate(336%) hue-rotate(190deg) brightness(98%) contrast(93%);
+.svg-filter-neutral-3 {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(10%) saturate(959%)
+    hue-rotate(188deg) brightness(95%) contrast(91%);
 }
 
-.svg-filter-neutral-600 {
-    filter: invert(100%) sepia(0%) saturate(240%) hue-rotate(194deg) brightness(121%) contrast(94%);
+.svg-filter-neutral-4 {
+  filter: brightness(0) saturate(100%) invert(50%) sepia(19%) saturate(290%)
+    hue-rotate(185deg) brightness(95%) contrast(93%);
 }
 
-.svg-filter-neutral-300 {
-    filter: invert(100%) sepia(2%) saturate(171%) hue-rotate(186deg) brightness(108%) contrast(96%);
+.svg-filter-neutral-5 {
+  filter: brightness(0) saturate(100%) invert(63%) sepia(1%) saturate(2194%)
+    hue-rotate(190deg) brightness(123%) contrast(76%);
 }
 
-.svg-filter-neutral-200 {
-    filter: invert(98%) sepia(2%) saturate(0%) hue-rotate(193deg) brightness(108%) contrast(97%);
+.svg-filter-neutral-6 {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(9%) saturate(75%)
+    hue-rotate(182deg) brightness(98%) contrast(92%);
 }
 
-.svg-filter-neutral-100 {
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(24deg) brightness(109%) contrast(97%);
+.svg-filter-neutral-7 {
+  filter: brightness(0) saturate(100%) invert(99%) sepia(1%) saturate(211%)
+    hue-rotate(166deg) brightness(99%) contrast(96%);
+}
+
+.svg-filter-neutral-8 {
+  filter: brightness(0) saturate(100%) invert(99%) sepia(94%) saturate(39%)
+    hue-rotate(180deg) brightness(100%) contrast(98%);
 }
