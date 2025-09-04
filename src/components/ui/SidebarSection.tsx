@@ -7,15 +7,16 @@ import { IconProp } from "@/types/IconTypes";
 import ArrowUpIcon from "@/images/icons/Arrow_Up.svg";
 import ArrowRightIcon from "@/images/icons/Arrow_Right.svg";
 import Label from "./CustomLabel";
+import { SidebarSubItem } from "@/types/SidebarTypes";
 
-type SubItem = { id: string; label: string };
 
 type Props = {
   sectionId: string;
   icon: IconProp;
   title: string;
   className?: string;
-  subItems?: SubItem[];
+  subItems?: SidebarSubItem[];
+  onSectionClick?: () => void;
   onSubClick?: (id: string) => void;
 };
 
@@ -25,6 +26,7 @@ export default function SidebarSection({
   title,
   className,
   subItems = [],
+  onSectionClick,
   onSubClick,
 }: Props) {
   const activeSectionId = useSidebarStore((s) => s.activeSectionId);
@@ -39,6 +41,12 @@ export default function SidebarSection({
     if (activeSectionId !== sectionId) {
       setActiveSection(sectionId);
     }
+    onSectionClick?.();
+  };
+
+  const handleSubItemClick = (subItem: SidebarSubItem) => {
+    selectSubItem(sectionId, subItem.id);
+    onSubClick?.(subItem.id);
   };
 
   return (
@@ -89,26 +97,23 @@ export default function SidebarSection({
           aria-hidden={!isOpen}
         >
           <div className="overflow-hidden pl-[12px] space-y-3">
-            {subItems.map((s) => (
+            {subItems.map((subItem: SidebarSubItem) => (
               <button
-                key={s.id}
-                onClick={() => {
-                  selectSubItem(sectionId, s.id);
-                  onSubClick?.(s.id);
-                }}
+                key={subItem.id}
+                onClick={() => handleSubItemClick(subItem)}
                 className="w-full flex items-center gap-[10px] cursor-pointer"
               >
                 <SvgIcon
                   icon={ArrowRightIcon}
                   size={18}
-                  className={clsx(selectedId === s.id && "svg-filter-primary-500")}
-                  color={selectedId === s.id ? undefined : "neutral-4"}
+                  className={clsx(selectedId === subItem.id && "svg-filter-primary-500")}
+                  color={selectedId === subItem.id ? undefined : "neutral-4"}
                 />
                 <Label
-                  text={s.label}
+                  text={subItem.label}
                   fontSize={14}
-                  fontWeight={selectedId === s.id ? "font-medium" : "font-normal"}
-                  color={selectedId === s.id ? "text-primary-500" : "text-neutral-4"}
+                  fontWeight={selectedId === subItem.id ? "font-medium" : "font-normal"}
+                  color={selectedId === subItem.id ? "text-primary-500" : "text-neutral-4"}
                 />
               </button>
             ))}

@@ -11,6 +11,11 @@ type SidebarStore = {
 
   badges: Record<string, number>;
   setBadge: (sectionId: string, count: number) => void;
+
+  currentPageTitle: string | null;
+  currentPageType: 'header' | 'subheader' | null;
+  setCurrentPage: (title: string, type: 'header' | 'subheader') => void;
+  clearCurrentPage: () => void;
 };
 
 export const useSidebarStore = create<SidebarStore>()(
@@ -25,6 +30,13 @@ export const useSidebarStore = create<SidebarStore>()(
       badges: {},
       setBadge: (sectionId, count) =>
         set((s) => ({ badges: { ...s.badges, [sectionId]: count } })),
+
+      currentPageTitle: null,
+      currentPageType: null,
+      setCurrentPage: (title, type) => 
+        set({ currentPageTitle: title, currentPageType: type }),
+      clearCurrentPage: () => 
+        set({ currentPageTitle: null, currentPageType: null }),
     }),
     {
       name: "sidebar-state",
