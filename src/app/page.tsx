@@ -1,15 +1,18 @@
 "use client";
 
 import Header from "@/components/layout/Header";
+import Sidebar from "@/components/layout/Sidebar";
 
-export default function Home() {
+export default function Page() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Header />
-      <div className="p-6">
-        {/* Page content goes here */}
-        <h1 className="text-xl font-semibold">Welcome to Board App</h1>
+      <div className="grid grid-cols-1 md:grid-cols-[264px_1fr]">
+        <Sidebar />
+        <main className="p-4 md:p-6">
+        
+        </main>
       </div>
-    </main>
+    </div>
   );
 }

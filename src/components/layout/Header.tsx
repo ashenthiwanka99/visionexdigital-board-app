@@ -16,7 +16,7 @@ import Logo from "@/images/logos/Logo_Text.svg";
 
 export default function Header() {
     return (
-        <header className="w-full border-b border-neutral-200 bg-white">
+        <header className="w-full border-b border-[#E6E8EC] bg-white">
             <div className="flex items-center justify-between px-4 py-2 md:px-6">
 
                 <div className="flex items-center">
