@@ -12,7 +12,7 @@ import PlusIcon from "@/images/icons/Plus.svg";
 import SettingIcon from "@/images/icons/Settings.svg";
 import BellIcon from "@/images/icons/Bell.svg";
 import Logo from "@/images/logos/Logo_Text.svg";
-import CustomButtonRightIcon from "@/components/ui/CustomButtonRightIcon";
+import CustomHeaderButton from "@/components/ui/CustomHeaderButton";
 
 export default function Header() {
   return (
@@ -24,13 +24,13 @@ export default function Header() {
 
         <div className="flex items-center gap-12">
           <div className="hidden md:flex items-center gap-6">
-            <CustomButtonRightIcon
+            <CustomHeaderButton
               label="Create new board"
               icon={PlusIcon}
               width={170}
               height={40}
               className="text-[12px] font-semibold"
-              onClick={() => alert("New board")}
+              onClick={() => console.info("Create new board Clicked!")}
             />
             <div className="max-w-[60vw]">
               <SearchInput className="w-full" />
@@ -42,9 +42,9 @@ export default function Header() {
               color="neutral-5"
               width={40}
               height={40}
-              onClick={() => alert("Settings")}
+              onClick={() => console.info("Setting Clicked!")}
             />
-            <CustomNotificationButton icon={BellIcon} width={40} height={40} showDot />
+            <CustomNotificationButton icon={BellIcon} width={40} height={40} showDot onClick={() => console.info("Notification Clicked!")}/>
             <ImagePlaceholder size={36} />
           </div>
         </div>

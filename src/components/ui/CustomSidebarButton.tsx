@@ -17,7 +17,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   radius?: number | string;
 };
 
-export default function CustomButtonLeftIcon({
+export default function CustomSidebarButton({
   label,
   icon,
   width,

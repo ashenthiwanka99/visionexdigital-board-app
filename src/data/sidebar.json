@@ -1,17 +1,46 @@
 [
-  { "id": "dashboard", "title": "Dashboard", "iconKey": "dashboard" },
+  {
+    "id": "dashboard",
+    "title": "Dashboard",
+    "iconKey": "dashboard"
+  },
   {
     "id": "boards",
     "title": "Boards",
     "iconKey": "folder",
     "subItems": [
-      { "id": "create-routes", "label": "Create routes" },
-      { "id": "deplement-react-app", "label": "Deplement React App" },
-      { "id": "sport-xi-project", "label": "Sport Xi Project", "route": "/sport-xi-project" },
-      { "id": "wordpress-theme", "label": "Wordpress theme" }
+      {
+        "id": "create-routes",
+        "label": "Create routes"
+      },
+      {
+        "id": "deplement-react-app",
+        "label": "Deplement React App"
+      },
+      {
+        "id": "sport-xi-project",
+        "label": "Sport Xi Project",
+        "route": "/boards/sport-xi-project"
+      },
+      {
+        "id": "wordpress-theme",
+        "label": "Wordpress theme"
+      }
     ]
   },
-  { "id": "messages", "title": "Messages", "iconKey": "messages" },
-  { "id": "calendar", "title": "Calendar", "iconKey": "calendar" },
-  { "id": "team-members", "title": "Team members", "iconKey": "team" }
+  {
+    "id": "messages",
+    "title": "Messages",
+    "iconKey": "messages"
+  },
+  {
+    "id": "calendar",
+    "title": "Calendar",
+    "iconKey": "calendar"
+  },
+  {
+    "id": "team-members",
+    "title": "Team members",
+    "iconKey": "team"
+  }
 ]

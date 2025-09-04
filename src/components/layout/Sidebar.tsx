@@ -2,7 +2,7 @@
 
 import SidebarWorkspaceCard from "@/components/ui/SidebarWorkspaceCard";
 import SidebarSection from "@/components/ui/SidebarSection";
-import CustomButtonLeftIcon from "@/components/ui/CustomButtonLeftIcon";
+import CustomSidebarButton from "@/components/ui/CustomSidebarButton";
 import SvgIcon from "@/components/ui/SvgIcon";
 import ImagePlaceholder from "@/components/ui/CustomImagePlaceholder";
 
@@ -45,9 +45,9 @@ export default function Sidebar() {
   };
 
   const handleSubItemClick = (subItem: SidebarSubItem, parentTitle: string) => {
-    if (subItem.id === "sport-xi-project" || subItem.route === "/sport-xi-project") {
+    if (subItem.id === "sport-xi-project" || subItem.route === "/boards/sport-xi-project") {
       clearCurrentPage();
-      router.push("/sport-xi-project");
+      router.push("/boards/sport-xi-project");
     } else {
       setCurrentPage(subItem.label, "subheader");
       router.push("/");
@@ -104,7 +104,7 @@ export default function Sidebar() {
         </div>
 
         <div className="mt-auto px-[24px] pb-[40px] space-y-3">
-          <CustomButtonLeftIcon
+          <CustomSidebarButton
             label="Support"
             icon={SupportIcon}
             variant="ghost"
@@ -115,7 +115,7 @@ export default function Sidebar() {
               router.push("/");
             }}
           />
-          <CustomButtonLeftIcon
+          <CustomSidebarButton
             label="Logout"
             icon={LogoutIcon}
             variant="solid"
@@ -211,7 +211,7 @@ export default function Sidebar() {
             </div>
 
             <div className="mt-auto px-[24px] pb-[40px] space-y-3">
-              <CustomButtonLeftIcon
+              <CustomSidebarButton
                 label="Support"
                 icon={SupportIcon}
                 variant="ghost"
@@ -222,7 +222,7 @@ export default function Sidebar() {
                   router.push("/");
                 }}
               />
-              <CustomButtonLeftIcon
+              <CustomSidebarButton
                 label="Logout"
                 icon={LogoutIcon}
                 variant="solid"
