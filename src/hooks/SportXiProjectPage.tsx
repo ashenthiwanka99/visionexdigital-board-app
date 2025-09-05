@@ -18,7 +18,7 @@ export function useSportXiProjectPage() {
 
     const headerProps: SportXiHeaderProps = {
         status: "In progress",
-        statusBg: "bg-[var(--color-orange-500)]",
+        statusBg: "bg-[var(--color-yellow-500)]",
         avatarCount: 2,
     };
 

@@ -9,6 +9,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
     icon?: IconProp;
     width?: string | number;
     height?: string | number;
+    size?: string | number;
     color?: string;
     className?: string;
 };
@@ -17,6 +18,7 @@ export default function CustomIconButton({
     icon,
     width,
     height,
+    size,
     color,
     className,
     ...props
@@ -33,7 +35,7 @@ export default function CustomIconButton({
         >
             {icon && (
                 <span className="flex items-center justify-center h-full w-full">
-                    <SvgIcon icon={icon} size={24} color={color} />
+                    <SvgIcon icon={icon} size={size} color={color} />
                 </span>
             )}
         </button>
