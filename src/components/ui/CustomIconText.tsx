@@ -13,7 +13,7 @@ type Props = {
   className?: string;
 };
 
-export default function IconCounter({
+export default function CustomIconText({
   icon,
   label,
   iconColor = "neutral-4",
