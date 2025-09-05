@@ -72,7 +72,7 @@ export default function Sidebar() {
 
       <aside
         ref={sidebarRef}
-        className={`flex min-[1000px]:hidden h-[calc(100vh-64px)] border-r border-[#E6E8EC] bg-white p-0 flex-col transition-all duration-300 ease-in-out ${
+        className={`flex min-[1000px]:hidden h-[calc(100vh-64px)] border-r border-[#E6E8EC] bg-white p-2 flex-col transition-all duration-300 ease-in-out ${
           isExpanded ? "w-[288px]" : "w-[72px]"
         }`}
       >

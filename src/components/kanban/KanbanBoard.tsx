@@ -19,8 +19,8 @@ export default function KanbanBoard({
 }: Props) {
   return (
     <div className={clsx("w-full", className)}>
-      <div className="h-[calc(100vh-64px)] border border-neutral-6 bg-white">
-        <div className="flex h-full divide-x divide-neutral-6">
+      <div className="border-l border-r border-t border-neutral-6 bg-white overflow-x-auto">
+        <div className="flex divide-x divide-neutral-6 w-full min-w-[1000px]">
           {lanes.map((lane) => (
             <KanbanLane
               key={lane.id}

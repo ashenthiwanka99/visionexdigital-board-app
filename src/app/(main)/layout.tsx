@@ -1,13 +1,25 @@
+"use client";
+
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
+import { useSidebar } from "@/hooks/useSidebar";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
+  const { isExpanded } = useSidebar();
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-screen bg-white overflow-hidden flex flex-col">
       <Header />
-      <div className="grid grid-cols-1 md:grid-cols-[288px_1fr]">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="pt-4 pb-6 px-4 md:pt-6 md:pr-6 md:pb-6 md:pl-0 max-[760px]:px-4">
+        <main 
+          className={`
+            flex-1 overflow-auto pt-4 pb-6 md:pt-6 md:pb-6 max-[760px]:px-4
+            min-[1000px]:pl-0
+            max-[999px]:transition-all max-[999px]:duration-300 max-[999px]:ease-in-out
+            ${isExpanded ? 'max-[999px]:ml-0' : 'max-[999px]:ml-0'}
+          `}
+        >
           {children}
         </main>
       </div>

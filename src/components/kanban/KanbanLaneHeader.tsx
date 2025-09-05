@@ -25,9 +25,9 @@ export default function KanbanLaneHeader({ lane, onAdd, onMenu, className }: Pro
     return (
         <div
             className={clsx(
-                "flex items-center justify-between py-3 sticky top-0 bg-white z-10",
+                "flex items-center justify-between sticky top-0 bg-white z-10",
                 "border-b border-neutral-6",
-                "px-[14px] pb-[20px] pt-[12px]",
+                "px-3 sm:px-4 pb-4 sm:pb-5 pt-3 sm:pt-3",
                 className
             )}
         >
@@ -37,7 +37,7 @@ export default function KanbanLaneHeader({ lane, onAdd, onMenu, className }: Pro
                 textColor={pillText}
                 fontSize={14}
                 fontWeight="font-medium"
-                className={clsx("px-6", pillBg)}
+                className={clsx("px-3 sm:px-6", pillBg)}
             />
 
             <div className="flex items-center gap-1">
