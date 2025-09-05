@@ -1,4 +1,4 @@
-import { categoryColorRegistry, Category } from "@/data/categoryColorRegistry";
+import { categoryColorRegistry, normalizeCategory } from "@/data/categoryColorRegistry";
 import { Task, FooterIcons, FooterItem, FooterTones } from "@/helpers/interface/TaskInterface";
 
 export function formatDateTimeLong(ts: number): string {
@@ -19,20 +19,8 @@ export function formatDateTimeLong(ts: number): string {
 }
 
 export function getCategoryBg(name?: string): string {
-    if (!name) return "bg-[var(--color-grey-500)]";
-    const key = name.trim().toLowerCase();
-
-    const lookup: Record<string, string> = {
-        "research": categoryColorRegistry[Category.Research],
-        "design": categoryColorRegistry[Category.Design],
-        "other": categoryColorRegistry[Category.Other],
-        "feedback": categoryColorRegistry[Category.Feedback],
-        "presentation": categoryColorRegistry[Category.Presentation],
-        "interface": categoryColorRegistry[Category.Interface],
-        "ux research": categoryColorRegistry[Category.UXResearch],
-    };
-
-    return lookup[key] ?? "bg-[var(--color-grey-500)]";
+  const normalized = normalizeCategory(name);
+  return normalized ? categoryColorRegistry[normalized] : "bg-[var(--color-grey-500)]";
 }
 
 export function buildFooter(task: Task, icons: FooterIcons): FooterItem[] {

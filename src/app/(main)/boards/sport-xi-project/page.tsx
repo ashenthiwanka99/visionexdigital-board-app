@@ -1,20 +1,11 @@
 "use client";
 
 import ProjectHeader from "@/components/project/ProjectHeader";
-import { useSportXiProjectPage } from "@/hooks/SportXiProjectPage";
 import KanbanBoard from "@/components/kanban/KanbanBoard";
-import { defaultLanes } from "@/data/kanbanLanesData";
+import { useSportXiKanban } from "@/hooks/useSportXiKanban";
 
 export default function SportXiProjectPage() {
-  const { headerProps } = useSportXiProjectPage();
-
-  const handleAddCard = (laneId: string) => {
-    console.log("Add card in lane:", laneId);
-  };
-
-  const handleLaneMenu = (laneId: string) => {
-    console.log("Lane menu for:", laneId);
-  };
+  const { headerProps, lanes, onAddCard, onLaneMenu } = useSportXiKanban();
 
   return (
     <div className="block">
@@ -24,11 +15,11 @@ export default function SportXiProjectPage() {
         avatarCount={headerProps.avatarCount}
       />
 
-      <div className="">
+      <div>
         <KanbanBoard
-          lanes={defaultLanes}
-          onAddCard={handleAddCard}
-          onLaneMenu={handleLaneMenu}
+          lanes={lanes}
+          onAddCard={onAddCard}
+          onLaneMenu={onLaneMenu}
         />
       </div>
     </div>

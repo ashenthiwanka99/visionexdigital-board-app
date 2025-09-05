@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import clsx from "clsx";
 import Label from "@/components/ui/CustomLabel";
 import AvatarStack from "@/components/ui/AvatarStack";
@@ -7,8 +8,11 @@ import ImagePlaceholder from "@/components/ui/CustomImagePlaceholder";
 import CustomIconButton from "@/components/ui/CustomIconButton";
 import CategoryLabel from "@/components/ui/CategoryLabel";
 import CustomIconText from "@/components/ui/CustomIconText";
+
 import type { IconProp } from "@/helpers/interface/IconInterface";
-import { Task } from "@/helpers/interface/TaskInterface";
+import type { Task } from "@/helpers/interface/TaskInterface";
+import type { FooterItem } from "@/helpers/types/KanbanTypes";
+
 import LinkIcon from "@/images/icons/link.svg";
 import MessageIcon from "@/images/icons/Message.svg";
 import InfoIcon from "@/images/icons/Info_Circle.svg";
@@ -18,61 +22,59 @@ import DotsIcon from "@/images/icons/Dots.svg";
 import FlashIcon from "@/images/icons/Flash.svg";
 
 import { getCategoryBg } from "@/utils/Helpers";
-import { FooterItem } from "@/helpers/types/KanbanTypes";
+import { KanbanCardProps } from "@/helpers/interface/KanbanCardInterface";
 
-type Props = {
-  task?: Task;
-  categoryText?: string;
-  categoryColor?: string;
-  title?: string;
-  menuIcon?: IconProp;
-  onMenuClick?: () => void;
-  assignees?: number;
-  priorityLabel?: string;
-  withImage?: boolean;
-  imageHeight?: number;
-  footer?: FooterItem[];
-  className?: string;
-};
 
-function buildFooter(task: Task): FooterItem[] {
-  const items: FooterItem[] = [];
-  const tones = {
-    neutral: { iconColor: "neutral-4", textColor: "text-neutral-4" },
-  };
+function useCategorySquare(name?: string, rawColor?: string) {
+  return useMemo(() => {
+    const categoryText = name ?? "";
+    const squareClassName =
+      rawColor?.startsWith("bg-") ? rawColor : getCategoryBg(categoryText);
+    const squareColor =
+      rawColor && !rawColor.startsWith("bg-") ? rawColor : undefined;
+    return { categoryText, squareClassName, squareColor };
+  }, [name, rawColor]);
+}
 
-  if (task.stats?.links)
-    items.push({ icon: LinkIcon as IconProp, label: task.stats.links, ...tones.neutral });
-  if (task.stats?.comments)
-    items.push({ icon: MessageIcon as IconProp, label: task.stats.comments, ...tones.neutral });
+function useFooterItems(task?: Task, fallback: FooterItem[] = []) {
+  return useMemo<FooterItem[]>(() => {
+    if (!task) return fallback;
 
-  if (task.stats?.reports)
-    items.push({
-      icon: InfoIcon as IconProp,
-      label: `${task.stats.reports} Reports`,
-      iconColor: "red-500",
-      textColor: "text-red-500",
-    });
+    const items: FooterItem[] = [];
+    const tones = { neutral: { iconColor: "neutral-4", textColor: "text-neutral-4" } };
 
-  const due = (task.dueText ?? "").trim().toLowerCase();
-  let bellLabel: "Group Call" | "Stream" | undefined;
+    if (task.stats?.links)
+      items.push({ icon: LinkIcon as IconProp, label: task.stats.links, ...tones.neutral });
+    if (task.stats?.comments)
+      items.push({ icon: MessageIcon as IconProp, label: task.stats.comments, ...tones.neutral });
 
-  if (task.stream === true) bellLabel = "Stream";
-  else if (due === "group call") bellLabel = "Group Call";
-  else if (due === "stream") bellLabel = "Stream";
+    if (task.stats?.reports)
+      items.push({
+        icon: InfoIcon as IconProp,
+        label: `${task.stats.reports} Reports`,
+        iconColor: "red-500",
+        textColor: "text-red-500",
+      });
 
-  if (bellLabel) {
-    items.push({
-      icon: BellIcon as IconProp,
-      label: bellLabel,
-      iconColor: "primary-500",
-      textColor: "text-[var(--color-primary-500)]",
-    });
-  } else if (task.dueText) {
-    items.push({ icon: CalendarIcon as IconProp, label: task.dueText, ...tones.neutral });
-  }
+    const due = (task.dueText ?? "").trim().toLowerCase();
+    let bellLabel: "Group Call" | "Stream" | undefined;
+    if (task.stream === true) bellLabel = "Stream";
+    else if (due === "group call") bellLabel = "Group Call";
+    else if (due === "stream") bellLabel = "Stream";
 
-  return items;
+    if (bellLabel) {
+      items.push({
+        icon: BellIcon as IconProp,
+        label: bellLabel,
+        iconColor: "primary-500",
+        textColor: "text-[var(--color-primary-500)]",
+      });
+    } else if (task.dueText) {
+      items.push({ icon: CalendarIcon as IconProp, label: task.dueText, ...tones.neutral });
+    }
+
+    return items;
+  }, [task, fallback]);
 }
 
 export default function KanbanCard({
@@ -88,19 +90,19 @@ export default function KanbanCard({
   imageHeight: propImageHeight = 176,
   footer: propFooter = [],
   className,
-}: Props) {
-  const categoryText = task?.category?.name ?? propCategoryText ?? "";
-  const rawCategoryColor = task?.category?.color ?? propCategoryColor;
+}: KanbanCardProps) {
+
   const title = task?.title ?? propTitle ?? "";
   const assignees = task?.assignees ?? propAssignees ?? 0;
   const priorityLabel = task?.priority ?? propPriorityLabel;
   const withImage = task?.hasImage ?? propWithImage ?? false;
   const imageHeight = propImageHeight ?? 176;
 
-  const footer: FooterItem[] = task ? buildFooter(task) : propFooter ?? [];
-
-  const squareClassName = rawCategoryColor?.startsWith("bg-") ? rawCategoryColor : getCategoryBg(categoryText);
-  const squareColor = rawCategoryColor && !rawCategoryColor.startsWith("bg-") ? rawCategoryColor : undefined;
+  const { categoryText, squareClassName, squareColor } = useCategorySquare(
+    task?.category?.name ?? propCategoryText,
+    task?.category?.color ?? propCategoryColor
+  );
+  const footerItems = useFooterItems(task, propFooter ?? []);
 
   return (
     <article
@@ -149,14 +151,14 @@ export default function KanbanCard({
         </div>
       )}
 
-      {footer.length > 0 && (
+      {footerItems.length > 0 && (
         <div className="mt-3 flex items-center justify-between">
           <div className="flex items-center gap-[24px]">
-            {footer.map((f, idx) => (
+            {footerItems.map((f, idx) => (
               <CustomIconText
                 key={idx}
                 icon={f.icon as IconProp}
-                label={f.label}          
+                label={f.label}
                 iconColor={f.iconColor ?? "neutral-4"}
                 textColor={f.textColor ?? "text-neutral-4"}
               />

@@ -17,13 +17,13 @@ import {
   MeasuringStrategy,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTaskStore } from "@/store/useTaskStore";
 import type { LaneId } from "@/helpers/types/TaskTypes";
-import mockTasks from "@/data/tasks.json";
 import { TaskMap, Task } from "@/helpers/interface/TaskInterface";
 import KanbanLaneCmp from "./KanbanLane";
 import KanbanCard from "./KanbanCard";
+import { usePersistedTasks } from "@/hooks/usePersistedTasks";
 
 type Props = {
   lanes: LaneConfig[];
@@ -42,30 +42,7 @@ export default function KanbanBoard({
   const moveTask = useTaskStore((s) => s.moveTask);
   const reorderWithin = useTaskStore((s) => s.reorderWithin);
 
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    const persistApi = (useTaskStore as any).persist;
-
-    const seedIfEmpty = () => {
-      const s = useTaskStore.getState();
-      const total = Object.values(s.tasks).reduce((n, arr) => n + arr.length, 0);
-      if (total === 0) s.setAll(mockTasks as Task[]);
-    };
-
-    if (persistApi?.hasHydrated?.()) {
-      setHydrated(true);
-      seedIfEmpty();
-    }
-
-    const unsub = persistApi?.onFinishHydration?.(() => {
-      setHydrated(true);
-      seedIfEmpty();
-    });
-
-    return () => unsub?.();
-  }, []);
-
+  const hydrated = usePersistedTasks();
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -73,6 +50,7 @@ export default function KanbanBoard({
   );
 
   const [activeId, setActiveId] = useState<string | null>(null);
+
   const allTasksFlat = useMemo(() => Object.values(tasks).flat(), [tasks]);
   const getTaskById = (id?: string | null): Task | undefined =>
     id ? allTasksFlat.find((t) => t.id === id) : undefined;
@@ -162,33 +140,37 @@ export default function KanbanBoard({
   return (
     <div className={clsx("w-full", className)}>
       <div className="border-l border-r border-t border-neutral-6 bg-white overflow-x-auto">
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCorners}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
-          measuring={{ droppable: { strategy: MeasuringStrategy.Always } }}
-        >
-          <div className="flex divide-x divide-neutral-6 w-max 2xl:w-full">
-            {lanes.map((lane) => (
-              <KanbanLaneCmp
-                key={lane.id}
-                lane={lane}
-                onAddCard={onAddCard}
-                onMenu={onLaneMenu}
-              />
-            ))}
-          </div>
+        {hydrated ? (
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
+            measuring={{ droppable: { strategy: MeasuringStrategy.Always } }}
+          >
+            <div className="flex divide-x divide-neutral-6 w-max 2xl:w-full">
+              {lanes.map((lane) => (
+                <KanbanLaneCmp
+                  key={lane.id}
+                  lane={lane}
+                  onAddCard={onAddCard}
+                  onMenu={onLaneMenu}
+                />
+              ))}
+            </div>
 
-          <DragOverlay dropAnimation={{ duration: 180, easing: "cubic-bezier(0.2, 0, 0, 1)" }}>
-            {activeTask ? (
-              <div className="pointer-events-none w-[260px]">
-                <KanbanCard task={activeTask} />
-              </div>
-            ) : null}
-          </DragOverlay>
-        </DndContext>
+            <DragOverlay dropAnimation={{ duration: 180, easing: "cubic-bezier(0.2, 0, 0, 1)" }}>
+              {activeTask ? (
+                <div className="pointer-events-none w-[260px]">
+                  <KanbanCard task={activeTask} />
+                </div>
+              ) : null}
+            </DragOverlay>
+          </DndContext>
+        ) : (
+          <div className="p-6 text-sm text-neutral-4">Loading board…</div>
+        )}
       </div>
     </div>
   );
