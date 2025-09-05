@@ -4,14 +4,13 @@ import clsx from "clsx";
 import KanbanLaneHeader from "./KanbanLaneHeader";
 import type { LaneConfig } from "@/helpers/types/KanbanTypes";
 
-// NEW: dnd-kit + data/store + card imports
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useTaskStore } from "@/store/useTaskStore";
 import type { LaneId } from "@/helpers/types/TaskTypes";
 import TaskCardDraggable from "@/components/kanban/TaskCardDraggable";
 import KanbanCard from "./KanbanCard";
-
+import type { Task } from "@/helpers/interface/TaskInterface";
 
 type LaneProps = {
   lane: LaneConfig;
@@ -20,37 +19,43 @@ type LaneProps = {
   onMenu?: (laneId: string) => void;
 };
 
+function rankPriority(p?: string) {
+  const k = (p ?? "").toLowerCase();
+  if (k === "high") return 0;
+  if (k === "medium") return 1;
+  return 2;
+}
+
 export default function KanbanLane({
   lane,
   className,
   onAddCard,
   onMenu,
 }: LaneProps) {
-  // NEW: pull tasks for this lane from the store
-  const tasks = useTaskStore((s) => s.tasks[lane.id as LaneId]);
-
-  // NEW: make the lane a droppable area
+  const laneTasks = (useTaskStore((s) => s.tasks[lane.id as LaneId]) ?? []) as Task[];
   const { setNodeRef } = useDroppable({ id: `lane-${lane.id}` });
 
+  const tasksSorted = [...laneTasks].sort((a, b) => {
+    const pr = rankPriority(a.priority) - rankPriority(b.priority);
+    if (pr !== 0) return pr;
+    return String(a.title).localeCompare(String(b.title));
+  });
+
   return (
-    <section
-      className={clsx("flex flex-col", className)}
-      style={{ minWidth: "0", width: "100%" }}
-    >
+    <section className={clsx("flex flex-col min-w-[288px] 2xl:min-w-0 2xl:flex-1", className)}>
       <KanbanLaneHeader
         lane={lane}
         onAdd={() => onAddCard?.(lane.id)}
         onMenu={() => onMenu?.(lane.id)}
       />
 
-      {/* KEEP your classes; only added ref + SortableContext + mapping */}
       <div ref={setNodeRef} className="flex-1 p-4 min-h-[calc(100vh-200px)]">
         <SortableContext
-          items={tasks.map((t) => t.id)}
+          items={tasksSorted.map((t) => t.id)}
           strategy={verticalListSortingStrategy}
         >
           <div className="space-y-3">
-            {tasks.map((t) => (
+            {tasksSorted.map((t) => (
               <TaskCardDraggable key={t.id} id={t.id}>
                 <KanbanCard task={t} />
               </TaskCardDraggable>

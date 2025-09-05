@@ -1,3 +1,5 @@
+import { IconProp } from "../interface/IconInterface";
+
 export type LaneId = string;
 
 export type LaneConfig = {
@@ -8,4 +10,11 @@ export type LaneConfig = {
     pillText?: string;
     pillLabel?: string;
     minWidth?: number;
+};
+
+export type FooterItem = {
+    icon: IconProp;
+    label: string | number;
+    iconColor?: string;
+    textColor?: string;
 };

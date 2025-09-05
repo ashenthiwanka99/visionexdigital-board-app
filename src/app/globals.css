@@ -12,7 +12,7 @@
   --color-green-500: #aee753;
   --color-green-600: #4b6029;
   /* Grey */
-  --color-grey-500: #777E90;
+  --color-grey-500: #777e90;
   /* Dark Grey */
   --color-darkgrey-500: #353945;
   /* Red */
@@ -68,6 +68,11 @@ body {
 .svg-filter-primary-500 {
   filter: brightness(0) saturate(100%) invert(38%) sepia(91%) saturate(2882%)
     hue-rotate(212deg) brightness(100%) contrast(102%);
+}
+
+.svg-filter-red-500 {
+  filter: brightness(0) saturate(100%) invert(23%) sepia(96%) saturate(7482%)
+    hue-rotate(344deg) brightness(96%) contrast(104%);
 }
 
 /* Neutral Colors */

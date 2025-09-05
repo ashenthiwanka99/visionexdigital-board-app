@@ -2,7 +2,8 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Task, LaneId } from "@/helpers/types/TaskTypes";
+import type { LaneId } from "@/helpers/types/TaskTypes";
+import { Task } from "@/helpers/interface/TaskInterface";
 
 type TaskState = {
   tasks: Record<LaneId, Task[]>;
@@ -11,11 +12,16 @@ type TaskState = {
   reorderWithin: (lane: LaneId, fromIndex: number, toIndex: number) => void;
 };
 
+const isLaneId = (x: unknown): x is LaneId =>
+  x === "todo" || x === "in-progress" || x === "approved" || x === "rejected";
+
 function toBuckets(list: Task[]): Record<LaneId, Task[]> {
   const buckets: Record<LaneId, Task[]> = {
     "todo": [], "in-progress": [], "approved": [], "rejected": []
   };
-  list.forEach(t => buckets[t.status].push(t));
+  for (const t of list) {
+    if (isLaneId(t.status)) buckets[t.status].push(t);
+  }
   return buckets;
 }
 
@@ -27,25 +33,19 @@ export const useTaskStore = create<TaskState>()(
       setAll: (list) => set({ tasks: toBuckets(list) }),
 
       moveTask: (taskId, toLane, toIndex) => {
-        const state = { ...get().tasks }; // Create a shallow copy of tasks
+        const state = { ...get().tasks };
         let task: Task | null = null;
-        let fromLane: LaneId | null = null;
 
-        // Find and remove the task from its current lane
         for (const lid of Object.keys(state) as LaneId[]) {
           const idx = state[lid].findIndex((t) => t.id === taskId);
           if (idx !== -1) {
             task = state[lid][idx];
             state[lid] = [...state[lid].slice(0, idx), ...state[lid].slice(idx + 1)];
-            fromLane = lid;
             break;
           }
         }
-
-        // If task not found, exit
         if (!task) return;
 
-        // Update task status and move to destination lane
         task.status = toLane;
         const dest = state[toLane];
         const insertAt = Math.max(0, Math.min(toIndex ?? dest.length, dest.length));

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useTaskStore } from "@/store/useTaskStore";
-import type { Task } from "@/helpers/types/TaskTypes";
+import { Task } from "@/helpers/interface/TaskInterface";
 
 export default function TaskStoreInitializer() {
   const tasks = useTaskStore((s) => s.tasks);

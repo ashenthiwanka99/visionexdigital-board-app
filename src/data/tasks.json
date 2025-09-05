@@ -8,7 +8,8 @@
     "priority": "Low",
     "hasImage": false,
     "stats": { "links": 2, "comments": 2 },
-    "dueText": "Due: Tomorrow"
+    "dueText": "Due: 16 April, 2022",
+    "stream": false
   },
   {
     "id": "t-02",
@@ -19,7 +20,8 @@
     "priority": "High",
     "hasImage": false,
     "stats": { "links": 2, "comments": 2 },
-    "dueText": "Due: Tomorrow"
+    "dueText": "Due: Tomorrow",
+    "stream": true
   },
   {
     "id": "t-03",
@@ -29,7 +31,8 @@
     "assignees": 4,
     "priority": "Low",
     "hasImage": false,
-    "stats": { "links": 35, "comments": 243 }
+    "stats": { "links": 35, "comments": 243 },
+    "stream": false
   },
   {
     "id": "t-04",
@@ -40,7 +43,8 @@
     "priority": "Low",
     "hasImage": false,
     "stats": { "comments": 329 },
-    "dueText": "Group Call"
+    "dueText": "Group Call",
+    "stream": false
   },
   {
     "id": "t-05",
@@ -50,7 +54,8 @@
     "assignees": 1,
     "priority": "Medium",
     "hasImage": false,
-    "stats": { "links": 3, "comments": 8, "reports": 2 }
+    "stats": { "links": 3, "comments": 8, "reports": 2 },
+    "stream": false
   },
   {
     "id": "t-06",
@@ -61,7 +66,8 @@
     "priority": "Low",
     "hasImage": true,
     "stats": { "comments": 8 },
-    "dueText": "Due: 22 April, 2022"
+    "dueText": "Due: 22 April, 2022",
+    "stream": false
   },
   {
     "id": "t-07",
@@ -71,7 +77,8 @@
     "assignees": 5,
     "priority": "Low",
     "hasImage": true,
-    "stats": { "links": 6, "comments": 28 }
+    "stats": { "links": 6, "comments": 28 },
+    "stream": false
   },
   {
     "id": "t-08",
@@ -81,7 +88,8 @@
     "assignees": 1,
     "priority": "Low",
     "hasImage": false,
-    "stats": { "links": 3, "comments": 8, "reports": 2 }
+    "stats": { "links": 3, "comments": 8, "reports": 2 },
+    "stream": false
   },
   {
     "id": "t-09",
@@ -92,7 +100,7 @@
     "priority": "Low",
     "hasImage": false,
     "stats": { "links": 1, "comments": 3 },
-    "dueText": "Stream"
+    "stream": true
   },
   {
     "id": "t-10",
@@ -103,7 +111,8 @@
     "priority": "Low",
     "hasImage": false,
     "stats": { "comments": 4 },
-    "dueText": "Due: 22 April, 2022"
+    "dueText": "Due: 22 April, 2022",
+    "stream": false
   },
   {
     "id": "t-11",
@@ -113,7 +122,8 @@
     "assignees": 1,
     "priority": "High",
     "hasImage": false,
-    "stats": { "links": 4, "comments": 9 }
+    "stats": { "links": 4, "comments": 9 },
+    "stream": false
   },
   {
     "id": "t-12",
@@ -123,7 +133,8 @@
     "assignees": 2,
     "priority": "Low",
     "hasImage": false,
-    "stats": { "links": 8, "comments": 31 }
+    "stats": { "links": 8, "comments": 31 },
+    "stream": false
   },
   {
     "id": "t-13",
@@ -132,7 +143,8 @@
     "category": { "name": "Design", "color": "#FF6161" },
     "assignees": 6,
     "priority": "High",
-    "hasImage": true
+    "hasImage": true,
+    "stream": false
   },
   {
     "id": "t-14",
@@ -141,7 +153,8 @@
     "category": { "name": "UX Reserch", "color": "#FFD65A" },
     "assignees": 2,
     "priority": "Low",
-    "hasImage": false
+    "hasImage": false,
+    "stream": false
   },
   {
     "id": "t-15",
@@ -150,6 +163,7 @@
     "category": { "name": "UX Reserch", "color": "#FFD65A" },
     "assignees": 3,
     "priority": "High",
-    "hasImage": true
+    "hasImage": true,
+    "stream": false
   }
 ]
