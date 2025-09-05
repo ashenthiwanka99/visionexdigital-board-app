@@ -1,19 +1,26 @@
 "use client";
 
+import Header from "@/components/layout/Header";
+import Sidebar from "@/components/layout/Sidebar";
 import ProjectHeader from "@/components/project/ProjectHeader";
-import { useSidebarStore } from "@/store/useSidebarStore";
-import { useEffect } from "react";
+import { useSportXiProjectPage } from "@/hooks/SportXiProjectPage";
 
 export default function SportXiProjectPage() {
-  const clearCurrentPage = useSidebarStore((s) => s.clearCurrentPage);
-
-  useEffect(() => {
-    clearCurrentPage();
-  }, [clearCurrentPage]);
+  const { headerProps } = useSportXiProjectPage();
 
   return (
-    <div className="block">
-      <ProjectHeader status={"In progress"} statusBg={"bg-yellow-500"} avatarCount={2} />
+    <div className="min-h-screen bg-white">
+      <Header />
+      <div className="grid grid-cols-1 md:grid-cols-[264px_1fr]">
+        <Sidebar />
+        <main className="p-4 md:p-6">
+          <ProjectHeader
+            status={headerProps.status}
+            statusBg={headerProps.statusBg}
+            avatarCount={headerProps.avatarCount}
+          />
+        </main>
+      </div>
     </div>
   );
 }

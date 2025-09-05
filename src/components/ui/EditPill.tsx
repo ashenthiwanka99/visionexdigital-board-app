@@ -4,7 +4,7 @@ import clsx from "clsx";
 import SvgIcon from "@/components/ui/SvgIcon";
 import Label from "@/components/ui/CustomLabel";
 import type { ButtonHTMLAttributes } from "react";
-import type { IconProp } from "@/types/IconTypes";
+import type { IconProp } from "@/helpers/interface/IconInterface";
 import EditIcon from "@/images/icons/Pencil.svg";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {

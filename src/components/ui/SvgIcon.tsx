@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import clsx from "clsx";
-import { IconProp } from "@/types/IconTypes";
+import { IconProp } from "@/helpers/interface/IconInterface";
 
 type SvgIconProps = {
     icon: IconProp;

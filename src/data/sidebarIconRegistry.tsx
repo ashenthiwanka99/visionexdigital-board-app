@@ -1,4 +1,4 @@
-import type { IconProp } from "@/types/IconTypes";
+import type { IconProp } from "@/helpers/interface/IconInterface";
 import Dashboard from "@/images/icons/Grid.svg";
 import Folder from "@/images/icons/Folder.svg";
 import Messages from "@/images/icons/Message.svg";

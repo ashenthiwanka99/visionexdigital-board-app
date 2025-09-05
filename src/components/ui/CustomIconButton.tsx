@@ -3,7 +3,7 @@
 import React, { ButtonHTMLAttributes } from "react";
 import clsx from "clsx";
 import SvgIcon from "./SvgIcon";
-import { IconProp } from "@/types/IconTypes";
+import { IconProp } from "@/helpers/interface/IconInterface";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
     icon?: IconProp;

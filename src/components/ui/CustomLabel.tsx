@@ -2,7 +2,7 @@
 
 import React, { HTMLAttributes } from "react";
 import clsx from "clsx";
-import { Align, VAlign } from "@/types/LabelTypes";
+import { Align, VAlign } from "@/helpers/types/LabelTypes";
 
 interface LabelProps extends HTMLAttributes<HTMLSpanElement> {
     text?: string;

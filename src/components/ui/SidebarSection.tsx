@@ -3,11 +3,11 @@
 import clsx from "clsx";
 import { useSidebarStore } from "@/store/useSidebarStore";
 import SvgIcon from "@/components/ui/SvgIcon";
-import { IconProp } from "@/types/IconTypes";
+import { IconProp } from "@/helpers/interface/IconInterface";
 import ArrowUpIcon from "@/images/icons/Arrow_Up.svg";
 import ArrowRightIcon from "@/images/icons/Arrow_Right.svg";
 import Label from "./CustomLabel";
-import { SidebarSubItem } from "@/types/SidebarTypes";
+import { SidebarSubItem } from "@/helpers/interface/SidebarInterface";
 
 
 type Props = {

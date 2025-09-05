@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import clsx from "clsx";
 import Label from "@/components/ui/CustomLabel";
 import CustomPill from "@/components/ui/CustomPill";
 import AvatarStack from "@/components/ui/AvatarStack";
 import EditPill from "@/components/ui/EditPill";
-import { useMetaStore } from "@/store/useMetaStore";
-import { formatDateTimeLong } from "@/utils/Helpers";
+import { useProjectHeader } from "@/hooks/useProjectHeader";
 
 interface Props {
   title?: string;
@@ -27,12 +25,7 @@ export default function ProjectHeader({
   avatarCount,
   className,
 }: Props) {
-  const lastUpdated = useMetaStore((s) => s.lastUpdated);
-  const touch = useMetaStore((s) => s.touch);
-
-  useEffect(() => {
-    if (!lastUpdated) touch();
-  }, [lastUpdated, touch]);
+  const { formattedLastUpdated } = useProjectHeader();
 
   return (
     <>
@@ -84,7 +77,7 @@ export default function ProjectHeader({
 
       <div className="pt-[17px] pl-[28px] pb-[22px]">
         <Label
-          text={`Last updated on: ${formatDateTimeLong(lastUpdated ?? Date.now())}`}
+          text={`Last updated on: ${formattedLastUpdated}`}
           fontSize={14}
           fontWeight="font-normal"
           color="text-neutral-5"
