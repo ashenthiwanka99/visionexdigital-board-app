@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import clsx from "clsx";
-import KanbanLane from "./KanbanLane";
 import { LaneConfig } from "@/helpers/types/KanbanTypes";
 import {
   DndContext,
@@ -22,6 +22,7 @@ import { useTaskStore } from "@/store/useTaskStore";
 import type { LaneId } from "@/helpers/types/TaskTypes";
 import mockTasks from "@/data/tasks.json";
 import { TaskMap, Task } from "@/helpers/interface/TaskInterface";
+import KanbanLaneCmp from "./KanbanLane";
 import KanbanCard from "./KanbanCard";
 
 type Props = {
@@ -38,29 +39,41 @@ export default function KanbanBoard({
   onLaneMenu,
 }: Props) {
   const tasks = useTaskStore((s) => s.tasks) as TaskMap;
-  const setAll = useTaskStore((s) => s.setAll);
   const moveTask = useTaskStore((s) => s.moveTask);
   const reorderWithin = useTaskStore((s) => s.reorderWithin);
 
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const total = Object.values(tasks).reduce((acc, arr) => acc + arr.length, 0);
-    if (total === 0) {
-      setAll(mockTasks as Task[]);
+    const persistApi = (useTaskStore as any).persist;
+
+    const seedIfEmpty = () => {
+      const s = useTaskStore.getState();
+      const total = Object.values(s.tasks).reduce((n, arr) => n + arr.length, 0);
+      if (total === 0) s.setAll(mockTasks as Task[]);
+    };
+
+    if (persistApi?.hasHydrated?.()) {
+      setHydrated(true);
+      seedIfEmpty();
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const unsub = persistApi?.onFinishHydration?.(() => {
+      setHydrated(true);
+      seedIfEmpty();
+    });
+
+    return () => unsub?.();
+  }, []);
+
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
-  const allTasksFlat = useMemo(
-    () => Object.values(tasks).flat(),
-    [tasks]
-  );
-
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const allTasksFlat = useMemo(() => Object.values(tasks).flat(), [tasks]);
   const getTaskById = (id?: string | null): Task | undefined =>
     id ? allTasksFlat.find((t) => t.id === id) : undefined;
 
@@ -80,9 +93,7 @@ export default function KanbanBoard({
     return undefined;
   };
 
-  const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(String(event.active.id));
-  };
+  const handleDragStart = (e: DragStartEvent) => setActiveId(String(e.active.id));
 
   const handleDragOver = (event: DragOverEvent) => {
     const { active, over } = event;
@@ -146,8 +157,6 @@ export default function KanbanBoard({
     setActiveId(null);
   };
 
-  const handleDragCancel = () => setActiveId(null);
-
   const activeTask = getTaskById(activeId);
 
   return (
@@ -159,12 +168,11 @@ export default function KanbanBoard({
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
-          onDragCancel={handleDragCancel}
           measuring={{ droppable: { strategy: MeasuringStrategy.Always } }}
         >
           <div className="flex divide-x divide-neutral-6 w-max 2xl:w-full">
             {lanes.map((lane) => (
-              <KanbanLane
+              <KanbanLaneCmp
                 key={lane.id}
                 lane={lane}
                 onAddCard={onAddCard}
@@ -173,9 +181,7 @@ export default function KanbanBoard({
             ))}
           </div>
 
-          <DragOverlay
-            dropAnimation={{ duration: 180, easing: "cubic-bezier(0.2, 0, 0, 1)" }}
-          >
+          <DragOverlay dropAnimation={{ duration: 180, easing: "cubic-bezier(0.2, 0, 0, 1)" }}>
             {activeTask ? (
               <div className="pointer-events-none w-[260px]">
                 <KanbanCard task={activeTask} />

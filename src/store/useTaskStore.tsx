@@ -1,8 +1,8 @@
 "use client";
 
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import type { LaneId } from "@/helpers/types/TaskTypes";
+import { persist, createJSONStorage } from "zustand/middleware";
+import type {  LaneId } from "@/helpers/types/TaskTypes";
 import { Task } from "@/helpers/interface/TaskInterface";
 
 type TaskState = {
@@ -19,9 +19,7 @@ function toBuckets(list: Task[]): Record<LaneId, Task[]> {
   const buckets: Record<LaneId, Task[]> = {
     "todo": [], "in-progress": [], "approved": [], "rejected": []
   };
-  for (const t of list) {
-    if (isLaneId(t.status)) buckets[t.status].push(t);
-  }
+  for (const t of list) if (isLaneId(t.status)) buckets[t.status].push(t);
   return buckets;
 }
 
@@ -47,7 +45,7 @@ export const useTaskStore = create<TaskState>()(
         if (!task) return;
 
         task.status = toLane;
-        const dest = state[toLane];
+        const dest = state[toLane] ?? [];
         const insertAt = Math.max(0, Math.min(toIndex ?? dest.length, dest.length));
         state[toLane] = [...dest.slice(0, insertAt), task, ...dest.slice(insertAt)];
 
@@ -55,12 +53,23 @@ export const useTaskStore = create<TaskState>()(
       },
 
       reorderWithin: (lane, fromIndex, toIndex) => {
-        const laneArr = [...get().tasks[lane]];
+        const laneArr = [...(get().tasks[lane] ?? [])];
         const [item] = laneArr.splice(fromIndex, 1);
         laneArr.splice(toIndex, 0, item);
         set((s) => ({ tasks: { ...s.tasks, [lane]: laneArr } }));
       },
     }),
-    { name: "kanban-tasks-v1" }
+    {
+      name: "kanban-tasks-v1",
+      version: 1,
+      storage: createJSONStorage(() => localStorage),
+      partialize: (s) => ({ tasks: s.tasks }),
+    }
   )
 );
+
+export function seedTasksIfEmpty(defaultTasks: Task[]) {
+  const s = useTaskStore.getState();
+  const total = Object.values(s.tasks).reduce((acc, arr) => acc + arr.length, 0);
+  if (total === 0) s.setAll(defaultTasks);
+}
