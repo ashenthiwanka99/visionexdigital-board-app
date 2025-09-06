@@ -1,13 +1,13 @@
 # Swimlane Dashboard (Next.js + dnd-kit + Zustand + Tailwind)
 
 A pixel-perfect, responsive swimlane (kanban) dashboard built in Next.js.
-It implements drag-and-drop between lanes, task persistence, JSON seeding, and live search—exactly per the assignment brief.
+It implements drag-and-drop between lanes, task persistence, JSON seeding, and live search.
 
 ---
 
 ## ✨ Features
 
-* **Pixel-perfect UI** (TailwindCSS), responsive down to **768px** (and below).
+* **Pixel-perfect UI** (TailwindCSS), responsive down to **768px**.
 * **Swimlanes** grouped by task `status` (`todo`, `in-progress`, `approved`, `rejected`).
 * **Drag & drop** with smooth reordering and cross-lane moves (dnd-kit).
 * **State management** via **Zustand** with **persistence** (localStorage/sessionStorage).
@@ -33,47 +33,81 @@ It implements drag-and-drop between lanes, task persistence, JSON seeding, and l
 ```
 src/
   app/
-    page.tsx
+    (main)/
+      boards/
+        layout.tsx
+      page.tsx
+    [...slug]/
+      page.tsx
+    favicon.ico
+    globals.css
     layout.tsx
+
   components/
     kanban/
       KanbanBoard.tsx
+      KanbanCard.tsx
       KanbanLane.tsx
       KanbanLaneHeader.tsx
-      KanbanCard.tsx
       TaskCardDraggable.tsx
+    layout/
+      Header.tsx
+      Sidebar.tsx
     project/
       ProjectHeader.tsx
     ui/
-      CustomIconButton.tsx
-      CustomNotificationButton.tsx
-      CustomHeaderButton.tsx
-      CustomSearchInput.tsx
-      CustomIconText.tsx
-      CustomLabel.tsx
+      AvatarStack.tsx
       CategoryLabel.tsx
-      SvgIcon.tsx
+      CustomHeaderButton.tsx
+      CustomIconButton.tsx
+      CustomIconText.tsx
       CustomImagePlaceholder.tsx
-  hooks/
-    usePersistedTasks.ts          ← seeds JSON after hydration if empty
-    useSportXiProjectPage.ts      ← header props + page wiring
-  store/
-    useTaskStore.ts               ← tasks + persist (localStorage)
-    useSearchStore.ts             ← search query + persist (sessionStorage)
+      CustomLabel.tsx
+      CustomNotificationButton.tsx
+      CustomPill.tsx
+      CustomSearchInput.tsx
+      CustomSidebarButton.tsx
+      EditPill.tsx
+      SidebarSection.tsx
+      SidebarWorkspaceCard.tsx
+      SvgIcon.tsx
+
   data/
-    tasks.json                    ← mock API data (no category colors)
-    kanbanLanesData.ts            ← lane metadata
-    categoryColorRegistry.ts      ← name → Tailwind class mapping (+ normalizer)
+    categoryColorRegistry.tsx
+    kanbanLanesData.tsx
+    sidebar.json
+    sidebarIconRegistry.tsx
+    tasks.json
+
   helpers/
-    types/
-      TaskTypes.ts
-      KanbanTypes.ts
     interface/
-      TaskInterface.ts            ← Task, Footer types
-    utils/
-      Helpers.ts                  ← getCategoryBg(), buildFooter(), date utils
-  styles/
-    globals.css                   ← CSS variables under :root
+      IconInterface.tsx
+      KanbanCardInterface.tsx
+      LabelInterface.tsx
+      SidebarInterface.tsx
+      TaskInterface.tsx
+    types/
+      KanbanTypes.tsx
+      LabelTypes.tsx
+      TaskTypes.tsx
+
+  hooks/
+    usePersistedTasks.tsx
+    useProjectHeader.tsx
+    useSidebar.tsx
+    useSportXiKanban.tsx
+
+  images/
+
+  store/
+    useMetaStore.tsx
+    useSearchStore.tsx
+    useSidebarStore.tsx
+    useTaskStore.tsx
+
+  utils/
+    Helpers.tsx
+    TaskStoreInitializer.tsx
 ```
 
 ---
@@ -83,22 +117,22 @@ src/
 ### Prerequisites
 
 * **Node.js ≥ 18**
-* **pnpm** (recommended) or **npm** / **yarn**
+* **npm** (recommended) or **pnpm** / **yarn**
 
 ### Install
 
 ```bash
-pnpm install
-# or
 npm install
+# or
+pnpm install
 ```
 
 ### Run in dev
 
 ```bash
-pnpm dev
-# or
 npm run dev
+# or
+pnpm dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000)
@@ -106,9 +140,9 @@ Visit [http://localhost:3000](http://localhost:3000)
 ### Build & start
 
 ```bash
-pnpm build && pnpm start
+npm build && npm start
 # or
-npm run build && npm run start
+pnpm run build && pnpm run start
 ```
 
 ---
@@ -260,27 +294,11 @@ Ensure your tokens live under `:root` in `styles/globals.css`:
 ## 📦 Scripts
 
 ```bash
-pnpm dev        # start dev server
-pnpm build      # production build
-pnpm start      # run production
-pnpm lint       # (if configured) lint the codebase
+npm dev        # start dev server
+npm build      # production build
+npm start      # run production
+npm lint       # (if configured) lint the codebase
 ```
-
----
-
-## ✅ Assignment Checklist
-
-* [x] Next.js + TailwindCSS UI, responsive to 768px
-* [x] Pixel-perfect swimlane layout
-* [x] Tasks displayed by lane (status)
-* [x] Drag & drop across lanes & reorder within lanes
-* [x] Zustand for state; update `status` on move
-* [x] Prepopulate from `data/tasks.json`
-* [x] Persist to storage; survive reloads
-* [x] Live search filters cards while typing
-* [x] Incremental commits recommended (see commit history)
-
----
 
 ## 📄 License
 
